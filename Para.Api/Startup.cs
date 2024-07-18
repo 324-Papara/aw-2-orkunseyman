@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Para.Data.Context;
 using Para.Data.UnitOfWork;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+
 
 namespace Para.Api;
 
@@ -30,6 +33,8 @@ public class Startup
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "Para.Api", Version = "v1" });
         });
 
+        services.AddFluentValidationAutoValidation();
+        
         var connectionStringSql = Configuration.GetConnectionString("MsSqlConnection");
         services.AddDbContext<ParaSqlDbContext>(options => options.UseSqlServer(connectionStringSql));
         

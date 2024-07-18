@@ -29,6 +29,15 @@ namespace Para.Api.Controllers
             var entity = await unitOfWork.CustomerRepository.GetById(customerId);
             return entity;
         }
+        
+        [HttpGet("getCustomerByNumber/{customerNumber}")]
+        public async Task<List<Customer>> GetCustomersWithDetails(int customerNumber)
+        {
+            var customersWithDetails = await unitOfWork.CustomerRepository.GetWithIncludesAndFilter(
+                x => x.CustomerNumber == customerNumber
+            );
+            return customersWithDetails;
+        }
 
         [HttpPost]
         public async Task Post([FromBody] Customer value)
